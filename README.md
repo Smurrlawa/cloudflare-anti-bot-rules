@@ -19,7 +19,7 @@ Here's the [expression](default.config) I currently use
 
 ### 📌 Notes
 
-- This rule **blocks common exploit scanners** and **bad bots** targeting Laravel, WordPress, or legacy PHP environments.
+- This rule **blocks common exploit scanners** and **bots** targeting Laravel, WordPress, or legacy PHP environments.
 - Works well for my use case right now — mostly blocking hits to `.env`, `composer.*`, `phpinfo`, and WordPress admin endpoints.
 - You can apply this as a **Custom Firewall Rule** in your Cloudflare dashboard under **WAF > Custom Rules**.
 
