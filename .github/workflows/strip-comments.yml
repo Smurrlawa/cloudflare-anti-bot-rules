@@ -3,9 +3,6 @@ name: Strip comments from .source.config
 on:
   push:
     branches: [main]
-    paths:
-      - 'src/business.source.config'
-      - 'src/free.source.config'
   pull_request:
     branches: [main]
 
