@@ -1,0 +1,25 @@
+name: Strip comments from .source.config
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  strip-comments:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Strip comments and save cleaned configs
+        run: |
+          sed -E '/^\s*\/\//d; s/\/\/.*$//' src/business.source.config > business.config
+          sed -E '/^\s*\/\//d; s/\/\/.*$//' src/free.source.config > free.config
+
+      - name: Commit cleaned .config file
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "ci: strip comments from .source.config into .config"
