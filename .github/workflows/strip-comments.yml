@@ -3,6 +3,8 @@ name: Strip comments from .source.config
 on:
   push:
     branches: [main]
+    paths:
+      - 'src/*.source.config'
   pull_request:
     branches: [main]
 
