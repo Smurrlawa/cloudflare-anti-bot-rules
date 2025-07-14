@@ -8,5 +8,6 @@
     if (!in_str && c == "/" && substr(line, i, 2) == "//") break
     output = output c
   }
+  if (output ~ /^[[:space:]]*$/) next
   print output
 }
