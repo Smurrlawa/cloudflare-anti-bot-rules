@@ -16,6 +16,21 @@ jobs:
 
       - name: Strip comments and save cleaned configs
         run: |
+          cat <<'EOF' > strip_comments.awk
+          {
+            line = $0
+            in_str = 0
+            output = ""
+            for (i = 1; i <= length(line); i++) {
+              c = substr(line, i, 1)
+              if (c == "\"") in_str = !in_str
+              if (!in_str && c == "/" && substr(line, i, 2) == "//") break
+              output = output c
+            }
+            if (output ~ /^[[:space:]]*$/) next
+            print output
+          }
+          EOF
           awk -f strip_comments.awk src/business.source.config > business.config
           awk -f strip_comments.awk src/free.source.config > free.config
 
