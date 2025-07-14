@@ -16,8 +16,34 @@ jobs:
 
       - name: Strip comments and save cleaned configs
         run: |
-          sed -E '/^\s*\/\//d; s/\/\/.*$//' src/business.source.config > business.config
-          sed -E '/^\s*\/\//d; s/\/\/.*$//' src/free.source.config > free.config
+          awk '{
+            line = $0
+            in_str = 0
+            output = ""
+            for (i = 1; i <= length(line); i++) {
+              c = substr(line, i, 1)
+              if (c == "\"") in_str = !in_str
+              if (!in_str && c == "/" && substr(line, i, 2) == "//") break
+              output = output c
+            }
+            if (output ~ /^[[:space:]]*$/) next
+            print output
+          }' src/business.source.config > business.config
+
+          awk '{
+            line = $0
+            in_str = 0
+            output = ""
+            for (i = 1; i <= length(line); i++) {
+              c = substr(line, i, 1)
+              if (c == "\"") in_str = !in_str
+              if (!in_str && c == "/" && substr(line, i, 2) == "//") break
+              output = output c
+            }
+            if (output ~ /^[[:space:]]*$/) next
+            print output
+          }' src/free.source.config > free.config
+
 
       - name: Commit cleaned .config file
         uses: stefanzweifel/git-auto-commit-action@v5
