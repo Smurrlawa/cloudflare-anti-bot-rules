@@ -14,9 +14,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Strip comments and save to .config in root
+      - name: Strip comments and save cleaned configs
         run: |
-          sed -E '/^\s*\/\//d; s/\/\/.*$//' src/.source.config > .config
+          sed -E '/^\s*\/\//d; s/\/\/.*$//' src/business.source.config > .business.config
+          sed -E '/^\s*\/\//d; s/\/\/.*$//' src/free.source.config > .free.config
 
       - name: Commit cleaned .config file
         uses: stefanzweifel/git-auto-commit-action@v5
